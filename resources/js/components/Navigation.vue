@@ -45,11 +45,11 @@
   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
 </svg> Košarica</a>
             </li>
-            <li class="nav-item">
+            <li  v-if="user.role === 'admin'" class="nav-item">
               <a class="nav-link mx-2 text-uppercase d-flex align-items-center" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle me-1" viewBox="0 0 16 16">
   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
   <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-</svg> Račun</a>
+</svg> ADMINISTRACIJA</a>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto" v-if="!isLoggedIn">
@@ -60,9 +60,35 @@
               <router-link class="nav-link mx-2 text-uppercase" style="color:#FF26C2;" to="/login">Prijava</router-link>
             </li>
           </ul>
-          <ul v-if="isLoggedIn">
-            <a @click="logoutUser()" href="">Odjava</a>
-          </ul>
+          <ul class="navbar-nav">
+                        <li class="nav-item dropdown" v-if="isLoggedIn">
+                            <a
+                                class="nav-link dropdown-toggle text-dark"
+                                href="#"
+                                id="navbarDropdown"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                {{ loggedInUser.name }}
+                            </a>
+                            <ul
+                                class="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="navbarDropdown"
+                            >
+
+                                <li>
+                                    <a
+                                        @click="logoutUser()"
+                                        class="dropdown-item"
+                                        href="#"
+                                    >
+                                        Odjava
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
         </div>
       </div>
     </nav>
@@ -87,7 +113,7 @@
         data(){
             return {
             isLoggedIn: false,
-            searchText: "",
+            user: {},
         };
         },
         computed: {
@@ -96,6 +122,9 @@
         isLoggedIn() {
             return this.loggedInUser !== null;
         },
+    },
+    created(){
+        this.getUser();
     },
     methods:{
             logoutUser() {
@@ -106,6 +135,17 @@
                     this.loggedInUser = null;
                     this.$store.dispatch("logout");
                     this.$router.push("/login");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        getUser() {
+            axios
+                .get("/getUser")
+                .then((response) => {
+                    this.user = response.data;
+                    console.log(this.user.role);
                 })
                 .catch((error) => {
                     console.log(error);

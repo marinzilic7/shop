@@ -27,6 +27,9 @@ import Footer from "../components/Footer.vue";
                         aria-describedby="emailHelp"
                         v-model="user.email"
                     />
+                    <p v-if="errors.email" class="text-danger">
+                        {{ errors.email[0] }}
+                    </p>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label"
@@ -38,6 +41,9 @@ import Footer from "../components/Footer.vue";
                         id="exampleInputPassword1"
                         v-model="user.password"
                     />
+                    <p v-if="errors.password" class="text-danger">
+                        {{ errors.password[0] }}
+                    </p>
                 </div>
                 <button
                     type="submit"
@@ -45,6 +51,9 @@ import Footer from "../components/Footer.vue";
                 >
                     Prijava
                 </button>
+                <p v-if="falseLogin" class="text-danger text-center mt-3">
+                    Pogrešan email ili lozinka
+                </p>
             </form>
         </div>
     </div>
@@ -60,7 +69,8 @@ export default {
                 email: '',
                 password: ''
               },
-              errors: {}
+              errors: {},
+              falseLogin: false,
          };
     },
     methods:{

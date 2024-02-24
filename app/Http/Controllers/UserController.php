@@ -66,4 +66,9 @@ class UserController extends Controller
         Auth::logout();
         return response()->json(['redirect' => '/login']);
     }
+
+    public function dohvatiKorisnika(){
+        $user = Auth::user();
+        return response()->json($user);
+    }
 }
