@@ -71,4 +71,23 @@ class UserController extends Controller
         $user = Auth::user();
         return response()->json($user);
     }
+
+    public function dohvatiKorisnike(){
+        $users = User::get();
+        return response()->json(['users' => $users]);
+    }
+
+
+    public function izbrisiKorisnika($id){
+        $user = User::findorFail($id);
+        $user->delete();
+        return response()->json(['message' => 'Korisnik izbrisan']);
+    }
+
+    public function promovirajKorisnika($id){
+        $user = User::findorFail($id);
+        $user->role = 'admin';
+        $user->save();
+        return response()->json(['message' => 'Korisnik promoviran']);
+    }
 }
