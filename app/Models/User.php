@@ -15,6 +15,16 @@ class User extends Model implements Authenticatable
     ];
 
 
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
 
     use HasFactory;
 }

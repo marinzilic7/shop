@@ -5,6 +5,40 @@ import Footer from "../components/Footer.vue";
 
 <template>
     <Navigation />
+
+    <div class="dropdown position-absolute end-0 me-3 mt-2">
+        <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+        >
+            Opcije
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <button
+                    class="btn btn-transparent"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal2"
+                    data-bs-whatever="@mdo"
+                >
+                    Dodaj kategoriju
+                </button>
+            </li>
+            <li>
+                <button
+                    class="btn btn-transparent"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal3"
+                    data-bs-whatever="@mdo"
+                >
+                    Dodaj artikl
+                </button>
+            </li>
+        </ul>
+    </div>
+
     <div class="container mt-5">
         <div
             class="accordion accordion-flush shadow-lg"
@@ -170,7 +204,7 @@ import Footer from "../components/Footer.vue";
                         aria-expanded="false"
                         aria-controls="flush-collapseTwo"
                     >
-                        Accordion Item #2
+                        Pregled svih kategorija
                     </button>
                 </h2>
                 <div
@@ -179,11 +213,61 @@ import Footer from "../components/Footer.vue";
                     data-bs-parent="#accordionFlushExample"
                 >
                     <div class="accordion-body">
-                        Placeholder content for this accordion, which is
-                        intended to demonstrate the
-                        <code>.accordion-flush</code> class. This is the second
-                        item's accordion body. Let's imagine this being filled
-                        with some actual content.
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0 bg-white">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>ID Kategorije</th>
+                                        <th>Ime</th>
+                                        <th>Dodao/la</th>
+                                        <th>Opcije</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="category in categories"
+                                        :key="category.id"
+                                    >
+                                        <td>
+                                            <div
+                                                class="d-flex align-items-center"
+                                            >
+                                                <div class="ms-3">
+                                                    <p class="fw-bold mb-1">
+                                                        {{ category.id }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p
+                                                class="fw-normal text-muted mb-1"
+                                            >
+                                                {{ category.name }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p
+                                                class="fw-normal text-muted mb-1"
+                                            >
+                                                {{ category.user.name }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="btn btn-link text-danger btn-sm btn-rounded"
+                                                @click="
+                                                    deleteCategory(category.id)
+                                                "
+                                            >
+                                                Izbrisi
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -197,7 +281,7 @@ import Footer from "../components/Footer.vue";
                         aria-expanded="false"
                         aria-controls="flush-collapseThree"
                     >
-                        Accordion Item #3
+                        Pregled artikala
                     </button>
                 </h2>
                 <div
@@ -206,19 +290,280 @@ import Footer from "../components/Footer.vue";
                     data-bs-parent="#accordionFlushExample"
                 >
                     <div class="accordion-body">
-                        Placeholder content for this accordion, which is
-                        intended to demonstrate the
-                        <code>.accordion-flush</code> class. This is the third
-                        item's accordion body. Nothing more exciting happening
-                        here in terms of content, but just filling up the space
-                        to make it look, at least at first glance, a bit more
-                        representative of how this would look in a real-world
-                        application.
+                        <div class="table-responsive">
+                        <table class="table align-middle mb-0 bg-white">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>ID artikla</th>
+                                    <th>Ime</th>
+                                    <th>Opis</th>
+                                    <th>Veličina</th>
+                                    <th>Cijena</th>
+                                    <th>Kategorija</th>
+                                    <th>Namjenjeno</th>
+                                    <th>Dodao/la</th>
+                                    <th>Opcije</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="product in products" :key="product.id">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="ms-3">
+                                                <p class="fw-bold mb-1">
+                                                    {{ product.id }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal text-muted mb-1">
+                                            {{ product.name }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal text-muted mb-1">
+                                            {{ product.description }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal text-muted mb-1">
+                                            {{ product.size }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal text-muted mb-1">
+                                            {{ product.price }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal text-muted mb-1">
+                                            {{ product.category.name }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal text-muted mb-1">
+                                            {{ product.gender.name }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal text-muted mb-1">
+                                            {{ product.user.name }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            class="btn btn-link text-danger btn-sm btn-rounded"
+                                            @click="deleteProduct(product.id)"
+                                        >
+                                            Izbrisi
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div
+        class="modal fade"
+        id="exampleModal2"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Dodaj kategoriju
+                    </h1>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <form @submit.prevent="addCategory()" method="POST">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label"
+                                >Ime kategorije:</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="recipient-name"
+                                v-model="category.name"
+                                required
+                            />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            Potvrdi
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        data-bs-dismiss="modal"
+                        class="btn btn-secondary w-100"
+                    >
+                        Zatvori
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="modal fade"
+        id="exampleModal3"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Dodaj artikl
+                    </h1>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <form @submit.prevent="addProduct()" method="POST">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label"
+                                >Ime artikla:</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="recipient-name"
+                                required
+                                v-model="product.name"
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label"
+                                >Opis artikla:</label
+                            >
+                            <textarea
+                                class="form-control"
+                                id="message-text"
+                                required
+                                v-model="product.description"
+                            ></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label"
+                                >Veličina artikla:</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="recipient-name"
+                                required
+                                v-model="product.size"
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label"
+                                >Cijena artikla:</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="recipient-name"
+                                required
+                                v-model="product.price"
+                            />
+                        </div>
+                        <div class="mt-3">
+                            <label for="trainSelect" class="col-form-label"
+                                >Kategorija artikla</label
+                            >
+                            <select
+                                class="form-select"
+                                id="trainSelect"
+                                aria-label="Default select example"
+                                v-model="product.category_id"
+                                required
+                            >
+                                <option disabled value="">
+                                    Kategorija artikla
+                                </option>
+                                <option
+                                    v-for="category in categories"
+                                    :value="category.id"
+                                >
+                                    {{ category.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mt-3">
+                            <label for="trainSelect" class="col-form-label"
+                                >Namjenjeno za:</label
+                            >
+                            <select
+                                class="form-select"
+                                id="trainSelect"
+                                aria-label="Default select example"
+                                v-model="product.gender_id"
+                                required
+                            >
+                                <option disabled value="">Odaberi</option>
+                                <option
+                                    v-for="gender in genders"
+                                    :value="gender.id"
+                                >
+                                    {{ gender.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mt-3">
+                            <label for="formFileSm" class="form-label"
+                                >Slika artikla
+                            </label>
+                            <input
+                                class="form-control form-control-sm"
+                                id="formFileSm"
+                                type="file"
+                                @change="imageChange"
+                                required
+                            />
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3 w-100">
+                            Potvrdi
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary w-100"
+                        data-bs-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <Footer />
 </template>
 
@@ -230,10 +575,28 @@ export default {
         return {
             users: [],
             message: "",
+            category: {
+                name: "",
+            },
+            genders: [],
+            categories: [],
+            product: {
+                name: "",
+                description: "",
+                size: "",
+                price: "",
+                category_id: "",
+                gender_id: "",
+                image: "",
+            },
+            products:[],
         };
     },
     created() {
         this.getUsers();
+        this.getCategory();
+        this.getGender();
+        this.getProduct();
     },
     methods: {
         getUsers() {
@@ -270,6 +633,116 @@ export default {
                     console.log(error);
                 });
         },
+        addCategory() {
+            const Category = {
+                name: this.category.name,
+            };
+            axios
+                .post("/addCategory", Category)
+                .then((response) => {
+                    this.message = response.data.message;
+                    $("#exampleModal2").modal("hide");
+                    this.getCategory();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        getCategory() {
+            axios
+                .get("/getCategory")
+                .then((response) => {
+                    this.categories = response.data.category;
+                    console.log(this.categories);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        deleteCategory(id) {
+            axios
+                .post(`/deleteCategory/${id}`)
+                .then((response) => {
+                    this.message = response.data.message;
+                    this.getCategory();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        getGender() {
+            axios
+                .get("/getGender")
+                .then((response) => {
+                    this.genders = response.data.gender;
+                    console.log(this.genders);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+
+        imageChange(event) {
+            this.product.image = event.target.files[0];
+        },
+
+        addProduct() {
+            const Product = new FormData();
+            Product.append("name", this.product.name);
+            Product.append("description", this.product.description);
+            Product.append("size", this.product.size);
+            Product.append("price", this.product.price);
+            Product.append("category_id", this.product.category_id);
+            Product.append("gender_id", this.product.gender_id);
+            Product.append("image", this.product.image);
+
+            axios
+                .post("/addProduct", Product)
+                .then((response) => {
+                    this.message = response.data.message;
+                    this.getProduct();
+                    $("#exampleModal3").modal("hide");
+                    this.product = {
+                        name: "",
+                        description: "",
+                        size: "",
+                        price: "",
+                        category_id: "",
+                        gender_id: "",
+                        image: "",
+                    };
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    } else {
+                        console.log(error);
+                    }
+                });
+        },
+
+        getProduct(){
+            axios
+                .get("/getProduct")
+                .then((response) => {
+                    this.products = response.data.product;
+                    console.log(this.products);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        deleteProduct(id){
+            axios
+                .post(`/deleteProduct/${id}`)
+                .then((response) => {
+                    this.message = response.data.message;
+                    this.getProduct();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     },
 };
 </script>
