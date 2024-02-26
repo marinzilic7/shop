@@ -1,10 +1,12 @@
 <script setup>
 import Navigation from "../components/Navigation.vue";
 import Footer from "../components/Footer.vue";
+
+
 </script>
 
 <template>
-    <Navigation />
+    <Navigation :number="number"  />
 
     <div
         class="container d-flex flex-column align-items-center justify-content-center mt-5 gap-3"
@@ -114,6 +116,7 @@ export default {
                     console.log(response);
                     this.getCartItems();
                     this.getCartNumber();
+                    location.reload();
                 })
                 .catch((error) => {
                     console.log(error);

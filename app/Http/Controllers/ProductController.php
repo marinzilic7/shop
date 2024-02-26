@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Laravel\Prompts\SearchPrompt;
 
 class ProductController extends Controller
 {
@@ -115,5 +116,11 @@ class ProductController extends Controller
                                 ->get();
 
         return response()->json(['proizvodiDjeca' => $proizvodiDjeca]);
+    }
+
+    public function searchProducts(Request $request){
+        $text = $request->input('text');
+        $results = Product::where('name', 'like', "%$text%")->get();
+        return response()->json(['results' => $results]);
     }
 }

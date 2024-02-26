@@ -38,6 +38,7 @@ Route::get('/getCartNumber',[CartController::class,'getCountInCart']);
 Route::get('getCartItems',[CartController::class,'getCartItems']);
 Route::post('/deleteItem/{id}',[CartController::class,'deleteItem']);
 
+Route::get('/search',[ProductController::class,'searchProducts']);
 
 Route::get('/{any}', function () {
     return view('welcome');

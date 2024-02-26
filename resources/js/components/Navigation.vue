@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+
+
+</script>
 
 <template>
 
@@ -6,26 +9,19 @@
 
     <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm" style="background-color: #E4D9D9 !important;">
       <div class="container">
-        <a class="navbar-brand" href="#"><i class="fa-solid fa-shop me-2"></i> <strong>TVOJE KRPICE</strong></a>
+        <router-link  class="navbar-brand" to="/"><i class="fa-solid fa-shop me-2"></i> <strong>TVOJE KRPICE</strong></router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="mx-auto my-3 d-lg-none d-sm-block d-xs-block">
-          <div class="input-group">
-            <span class="border-warning input-group-text bg-warning text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-</svg></span>
-            <input type="text" class="form-control border-warning" style="color:#7a7a7a;">
-            <button class="btn btn-warning text-white">Search</button>
-          </div>
-        </div>
-        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
-          <div class="ms-auto d-none d-lg-block">
-            <div class="input-group">
 
-              <input type="text" class="form-control"  style="color:#7a7a7a; border:1px solid #FF26C2">
-              <button class="btn  text-white" style="background-color: #FF26C2;">Search</button>
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+          <div class="ms-auto  d-lg-block">
+            <div class="input-group">
+                <form class="d-flex" @submit.prevent="searchProducts" >
+              <input type="text" class="form-control" v-model="text"  style="color:#7a7a7a; border:1px solid #FF26C2">
+              <button type="submit" class="btn  text-white" style="background-color: #FF26C2;">Search</button>
+            </form>
             </div>
           </div>
           <ul class="navbar-nav ms-auto ">
@@ -111,25 +107,30 @@
             Pregledavate ovu stranicu kao gost.
         </div>
     </div>
+
 </template>
 
 <script>
      import { mapState } from "vuex";
      import axios from "axios";
     import { mapGetters } from "vuex";
+    import { mapActions } from "vuex";
 
     export default {
+
         data(){
             return {
             isLoggedIn: false,
             user: {},
             number:'',
+            text: "",
 
         };
         },
         computed: {
         ...mapState(["loginMessage"]),
         ...mapGetters(["loggedInUser"]),
+
         isLoggedIn() {
             return this.loggedInUser !== null;
         },
@@ -137,6 +138,7 @@
     created(){
         this.getUser();
         this.getCartNumber();
+
 
     },
     methods:{
@@ -174,7 +176,27 @@
                 .catch((error) => {
                     console.log(error);
                 });
-        }
+        },
+        searchProducts() {
+            axios
+                .get("/search", { params: { text: this.text } })
+                .then((response) => {
+                    const results = response.data.results;
+                    this.search = true;
+                    console.log(results);
+
+                    this.$router.push({
+                         name: "searchResult",
+                        query: { results: JSON.stringify(results) },
+
+                    } ).then(() => {
+    location.reload();
+});;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         }
     };
 </script>

@@ -80,6 +80,7 @@ export default {
             axios.post(`/addCart/${id}`)
                 .then(response => {
                     console.log(response);
+                    location.reload();
                 })
                 .catch(error => {
                     this.message = error.response.data.message;

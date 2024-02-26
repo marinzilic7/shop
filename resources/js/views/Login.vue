@@ -16,6 +16,7 @@ import Footer from "../components/Footer.vue";
                 @submit.prevent="loginUser()"
                 method="POST"
             >
+                <h3 class="text-center">Prijava</h3>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label"
                         >Email</label

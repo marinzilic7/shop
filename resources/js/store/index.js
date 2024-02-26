@@ -1,11 +1,13 @@
-import { createStore } from 'vuex';
+import { createStore } from "vuex";
 
 const store = createStore({
     state() {
         return {
-            loginMessage: '',
+            loginMessage: "",
             isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")) || false,
-            loggedInUser: JSON.parse(localStorage.getItem("loggedInUser")) || null,
+            loggedInUser:
+                JSON.parse(localStorage.getItem("loggedInUser")) || null,
+            cartItems: [],
         };
     },
     mutations: {
@@ -13,7 +15,7 @@ const store = createStore({
             state.loginMessage = message;
         },
         clearLoginMessage(state) {
-            state.loginMessage = '';
+            state.loginMessage = "";
         },
         setLoggedInUser(state, user) {
             state.loggedInUser = user;
@@ -27,24 +29,34 @@ const store = createStore({
             state.loggedInUser = null;
             localStorage.removeItem("loggedInUser");
         },
+        addToCart(state, product) {
+            state.cartItems.push(product);
+        },
+        removeFromCart(state, productId) {
+            state.cartItems = state.cartItems.filter(
+                (item) => item.id !== productId
+            );
+        },
+        clearCart(state) {
+            state.cartItems = [];
+        },
     },
     actions: {
         setLoginMessage({ commit }, message) {
-            commit('setLoginMessage', message);
+            commit("setLoginMessage", message);
         },
         clearLoginMessage({ commit }) {
-            commit('clearLoginMessage');
+            commit("clearLoginMessage");
         },
         login({ commit }, user) {
-
             commit("setLoggedInUser", user);
             commit("setIsLoggedIn", true);
         },
         logout({ commit }) {
-
             commit("setLoggedInUser", null);
             commit("setIsLoggedIn", false);
         },
+
     },
     getters: {
         loggedInUser(state) {
@@ -53,6 +65,7 @@ const store = createStore({
         isLoggedIn(state) {
             return state.isLoggedIn;
         },
+        cartItemCount: state => state.cartItems.length,
     },
 });
 

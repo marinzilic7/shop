@@ -5,15 +5,7 @@ import Footer from "../components/Footer.vue";
 
 <template>
     <Navigation />
-    <div v-if="successRegister" class="position-absolute end-0 me-5 mt-3">
-        <div
-            class="alert alert-light text-light"
-            role="alert"
-            style="background-color: #ff26c2"
-        >
-            {{ message }}
-        </div>
-    </div>
+
     <div class="container">
         <div
             class="login-form d-flex justify-content-center align-items-center"
@@ -25,6 +17,7 @@ import Footer from "../components/Footer.vue";
                 @submit.prevent="registerUser()"
                 method="POST"
             >
+                <h3 class="text-center">Registracija</h3>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label"
                         >Ime</label
@@ -102,6 +95,14 @@ import Footer from "../components/Footer.vue";
                 >
                     Registriraj se
                 </button>
+                <div
+                    v-if="successRegister"
+                    class="alert alert-light text-light mt-3 text-center"
+                    role="alert"
+                    style="background-color: #ff26c2"
+                >
+                    {{ message }}
+                </div>
             </form>
         </div>
     </div>
@@ -138,7 +139,6 @@ export default {
                     this.message = response.data.message;
                     this.successRegister = true;
                     this.errors = {};
-
                 })
                 .catch((error) => {
                     if (error.response && error.response.status === 422) {
