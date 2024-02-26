@@ -123,7 +123,8 @@
             return {
             isLoggedIn: false,
             user: {},
-            number:''
+            number:'',
+
         };
         },
         computed: {
@@ -136,6 +137,7 @@
     created(){
         this.getUser();
         this.getCartNumber();
+
     },
     methods:{
             logoutUser() {

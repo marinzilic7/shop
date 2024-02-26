@@ -12,7 +12,10 @@ import Footer from "../components/Footer.vue";
         <h3 class="text-center">Tvoja košarica</h3>
         <div class="row row-cols-1 row-cols-md-2 g-3">
             <div class="col" v-for="item in items" :key="item.id">
-                <div class="card" style="max-width: 540px">
+                <div
+                    class="card"
+                    style="max-width: 540px; background-color: #e4d9d9"
+                >
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img
@@ -23,7 +26,10 @@ import Footer from "../components/Footer.vue";
                             />
                         </div>
                         <div class="col-md-8">
-                            <div class="card-body">
+                            <div
+                                class="card-body"
+                                style="background-color: #e4d9d9"
+                            >
                                 <h5 class="card-title">
                                     {{ item.product.name }}
                                 </h5>
@@ -36,7 +42,10 @@ import Footer from "../components/Footer.vue";
                                     }}</small>
                                 </p>
                             </div>
-                            <div class="d-flex justify-content-end me-3 mb-2">
+                            <div
+                                class="d-flex justify-content-end me-3 mb-2"
+                                style="background-color: #e4d9d9"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="25"
@@ -68,7 +77,7 @@ export default {
     data() {
         return {
             items: [],
-            number:'',
+            number: "",
         };
     },
     created() {
@@ -110,7 +119,6 @@ export default {
                     console.log(error);
                 });
         },
-
     },
 };
 </script>
