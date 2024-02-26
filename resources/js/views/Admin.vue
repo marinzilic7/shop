@@ -5,13 +5,18 @@ import Footer from "../components/Footer.vue";
 
 <template>
     <Navigation />
+    <div v-if="user.role === 'korisnik'" class="container mt-3 d-flex justify-content-center">
+        <div class="alert alert-warning text-center col-12 col-sm-6 col-lg-6 col-md-6">Nemate pristup administraciji</div>
+    </div>
 
-    <div class="dropdown position-absolute end-0 me-3 mt-2">
+    <div  v-if="user.role === 'admin'">
+        <div v-if="isUserLogin" class="dropdown position-absolute end-0 me-3 mt-2">
         <button
             class="btn btn-primary dropdown-toggle"
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
+
         >
             Opcije
         </button>
@@ -44,7 +49,7 @@ import Footer from "../components/Footer.vue";
             class="accordion accordion-flush shadow-lg"
             id="accordionFlushExample"
         >
-            <div class="accordion-item">
+            <div class="accordion-item" :class="{ 'disabled': isDisabled }">
                 <h2 class="accordion-header">
                     <button
                         class="accordion-button collapsed"
@@ -194,7 +199,7 @@ import Footer from "../components/Footer.vue";
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item" :class="{ 'disabled': isDisabled }">
                 <h2 class="accordion-header">
                     <button
                         class="accordion-button collapsed"
@@ -271,7 +276,7 @@ import Footer from "../components/Footer.vue";
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item" :class="{ 'disabled': isDisabled }">
                 <h2 class="accordion-header">
                     <button
                         class="accordion-button collapsed"
@@ -827,6 +832,8 @@ import Footer from "../components/Footer.vue";
             </div>
         </div>
     </div>
+    </div>
+
 
     <Footer />
 </template>
@@ -864,6 +871,9 @@ export default {
                 image: "",
             },
             productId: null,
+            isUserLogin:false,
+            isDisabled:false,
+            user:[],
         };
     },
     created() {
@@ -871,6 +881,8 @@ export default {
         this.getCategory();
         this.getGender();
         this.getProduct();
+        this.isUserLogged();
+        this.getUser();
     },
     methods: {
         getUsers() {
@@ -1065,8 +1077,43 @@ export default {
         imageChangeUpdate(event) {
             this.updateProduct.image = event.target.files[0];
         },
+        isUserLogged() {
+            axios
+                .get("/isUserLogged")
+                .then((response) => {
+                    this.message = response.data.message;
+                    this.isUserLogin= true;
+
+                    console.log(this.message)
+                    if(this.message === "Niste prijavljeni!"){
+                        this.isUserLogin = false;
+                        this.isDisabled = true;
+                    }
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        getUser() {
+            axios
+                .get("/getUser")
+                .then((response) => {
+                    this.user = response.data;
+                    console.log(this.user.role);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
     },
 };
 </script>
 
-<style></style>
+<style>
+
+.disabled{
+    pointer-events: none;
+}
+
+</style>

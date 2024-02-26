@@ -16,7 +16,7 @@ import axios from "axios";
         </div>
     </div>
     <div class="d-flex gap-5 flex-wrap mt-5 ms-5">
-        <div class="card shadow-lg" v-for="product in products" style="width: 18rem">
+        <div class="card shadow-lg" v-for="product in products" style="width: 18rem;">
             <img
                     :src="'/images/' + product.image"
                     class="card-img-top"
@@ -31,7 +31,7 @@ import axios from "axios";
                    Opis artikla:  {{product.description}}
                 </p>
             </div>
-            <ul class="list-group list-group-flush" >
+            <ul class="list-group list-group-flush" style="height: 100px;" >
                 <li class="list-group-item text-dark" style="background-color: #E4D9D9 !important;">Veličina: {{ product.size }}</li>
                 <li class="list-group-item text-dark" style="background-color: #E4D9D9 !important;">Namjenjeno: {{product.gender.name}}</li>
                 <li class="list-group-item text-dark" style="background-color: #E4D9D9 !important;">Kategorija: {{product.category.name}}</li>

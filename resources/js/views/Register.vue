@@ -12,13 +12,13 @@ import Footer from "../components/Footer.vue";
             style="height: 80vh; background-color: "
         >
             <form
-                class="col-lg-6 col-12 col-md-10 col-sm-8 p-5 rounded"
+                class="col-lg-6 col-12 col-md-10 col-sm-8 p-4 rounded"
                 style="background-color: #e4d9d9"
                 @submit.prevent="registerUser()"
                 method="POST"
             >
                 <h3 class="text-center">Registracija</h3>
-                <div class="mb-3">
+                <div class="mb">
                     <label for="exampleInputPassword1" class="form-label"
                         >Ime</label
                     >
@@ -32,7 +32,7 @@ import Footer from "../components/Footer.vue";
                         {{ errors.name[0] }}
                     </p>
                 </div>
-                <div class="mb-3">
+                <div class="mb">
                     <label for="exampleInputPassword1" class="form-label"
                         >Prezime</label
                     >
@@ -46,7 +46,7 @@ import Footer from "../components/Footer.vue";
                         {{ errors.surname[0] }}
                     </p>
                 </div>
-                <div class="mb-3">
+                <div class="mb">
                     <label for="exampleInputEmail1" class="form-label"
                         >Email</label
                     >
@@ -61,7 +61,7 @@ import Footer from "../components/Footer.vue";
                         {{ errors.email[0] }}
                     </p>
                 </div>
-                <div class="mb-3">
+                <div class="mb">
                     <label for="exampleInputPassword1" class="form-label"
                         >Lozinka</label
                     >
@@ -75,7 +75,7 @@ import Footer from "../components/Footer.vue";
                         {{ errors.password[0] }}
                     </p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="exampleInputPassword1" class="form-label"
                         >Ponovi lozinku</label
                     >
