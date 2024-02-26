@@ -154,6 +154,16 @@
                     console.log(error);
                 });
         },
+        getCart(){
+            axios
+                .get("/getCart")
+                .then((response) => {
+                    this.cart = response.data.numberOfItems;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
         }
     };
 </script>

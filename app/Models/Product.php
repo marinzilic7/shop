@@ -26,5 +26,10 @@ class Product extends Model
         return $this->belongsTo(Gender::class,'gender_id');
     }
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
     use HasFactory;
 }

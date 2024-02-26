@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 Route::post('/registerUser',[UserController::class,'registracijaKorisnika']);
 Route::post('/loginUser',[UserController::class,'prijavaKorisnika']);
@@ -29,6 +30,9 @@ Route::post('/updateProduct/{id}',[ProductController::class,'urediArtikl']);
 Route::get('/getProductMan',[ProductController::class,'dohvatiProizvodeMuski']);
 Route::get('/getProductWoman',[ProductController::class,'dohvatiProizvodeZenski']);
 Route::get('/getProductKid',[ProductController::class,'dohvatiProizvodeDjecji']);
+
+Route::post('/addCart/{id}',[CartController::class,'addCart']);
+
 
 Route::get('/{any}', function () {
     return view('welcome');
