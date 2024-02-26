@@ -35,6 +35,9 @@ Route::get('/getProductKid',[ProductController::class,'dohvatiProizvodeDjecji'])
 Route::post('/addCart/{id}',[CartController::class,'addCart']);
 Route::get('/getCartNumber',[CartController::class,'getCountInCart']);
 
+Route::get('getCartItems',[CartController::class,'getCartItems']);
+Route::post('/deleteItem/{id}',[CartController::class,'deleteItem']);
+
 
 Route::get('/{any}', function () {
     return view('welcome');

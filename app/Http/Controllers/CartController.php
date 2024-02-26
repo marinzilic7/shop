@@ -31,4 +31,18 @@ class CartController extends Controller
 
         return response()->json(['numberOfItems' => $numberOfItems]);
     }
+
+    public function getCartItems() {
+
+        $user = Auth::user();
+        $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
+
+        return response()->json(['cartItems' => $cartItems]);
+    }
+
+    public function deleteItem($id){
+        $item = Cart::find($id);
+        $item->delete();
+        return response()->json(['message' => 'Uspjesno']);
+    }
 }
