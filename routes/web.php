@@ -14,6 +14,7 @@ Route::post('/deleteUser/{id}',[UserController::class,'izbrisiKorisnika']);
 Route::get('/getUser',[UserController::class,'dohvatiKorisnika']);
 Route::get('/getUsers',[UserController::class,'dohvatiKorisnike']);
 Route::post('/promoteUser/{id}',[UserController::class,'promovirajKorisnika']);
+Route::get('/isUserLogged',[UserController::class,'isUserLogged']);
 
 
 Route::post('/addCategory',[CategoryController::class,'dodajKategoriju']);
@@ -32,6 +33,7 @@ Route::get('/getProductWoman',[ProductController::class,'dohvatiProizvodeZenski'
 Route::get('/getProductKid',[ProductController::class,'dohvatiProizvodeDjecji']);
 
 Route::post('/addCart/{id}',[CartController::class,'addCart']);
+Route::get('/getCartNumber',[CartController::class,'getCountInCart']);
 
 
 Route::get('/{any}', function () {

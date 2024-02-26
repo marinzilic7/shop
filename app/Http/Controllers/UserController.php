@@ -90,4 +90,15 @@ class UserController extends Controller
         $user->save();
         return response()->json(['message' => 'Korisnik promoviran']);
     }
+
+    public function isUserLogged()
+    {
+
+        $user = Auth::user();
+        if ($user) {
+            return response()->json($user);
+        } else {
+            return response()->json(['message' => 'Niste prijavljeni!']);
+        }
+    }
 }
