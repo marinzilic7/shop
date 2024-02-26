@@ -25,6 +25,7 @@ Route::get('/getGender',[GenderController::class,'dohvatiGender']);
 Route::post('/addProduct',[ProductController::class,'dodajProizvod']);
 Route::get('/getProduct',[ProductController::class,'dohvatiProizvode']);
 Route::post('/deleteProduct/{id}',[ProductController::class,'izbrisiProizvod']);
+Route::post('/updateProduct/{id}',[ProductController::class,'urediArtikl']);
 
 Route::get('/{any}', function () {
     return view('welcome');

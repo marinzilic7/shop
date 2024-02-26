@@ -44,4 +44,47 @@ class ProductController extends Controller
         $product->delete();
         return response()->json(['message' => 'Uspjesno ste izbrisali proizvod!']);
     }
+
+    public function urediArtikl(Request $request, $id){
+
+        $product = Product::findOrFail($id);
+        $data = $request->validate([
+            'name' => '',
+            'size' => '',
+            'description' => '',
+            'gender_id' => '',
+            'category_id' => '',
+            'price' => '',
+            'image' => '',
+
+        ]);
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            $data['image'] = $name;
+        }
+
+
+        DB::table('products')
+    ->where('id', $id)
+    ->update([
+        'name' => $data['name'],
+        'price' => $data['price'],
+        'size' => $data['size'],
+        'gender_id' => $data['gender_id'],
+        'category_id' => $data['category_id'],
+        'description' => $data['description'],
+        'image' => $data['image']
+    ]);
+
+        $product->save();
+        return response()->json([
+            'poruka' => 'Uspjesno uredjeno',
+            'product' => $product,
+        ]);
+    }
+
 }
