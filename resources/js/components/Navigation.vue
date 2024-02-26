@@ -33,10 +33,12 @@
               <router-link class="nav-link mx-2 text-uppercase active " aria-current="page" to="/">Muškarci</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-2 text-uppercase" href="#">Žene</a>
+            <router-link class="nav-link mx-2 text-uppercase active " aria-current="page" to="/womens">Žene</router-link>
+
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-2 text-uppercase" href="#">Djeca</a>
+                <router-link class="nav-link mx-2 text-uppercase active " aria-current="page" to="/kids">Djeca</router-link>
+
             </li>
           </ul>
           <ul class="navbar-nav ms-auto ">

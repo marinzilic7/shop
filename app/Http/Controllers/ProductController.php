@@ -87,4 +87,33 @@ class ProductController extends Controller
         ]);
     }
 
+    public function dohvatiProizvodeMuski(){
+        $proizvodiMuski = Product::with('user', 'category', 'gender')
+                                ->whereHas('gender', function ($query) {
+                                    $query->where('name', 'Muškarci');
+                                })
+                                ->get();
+
+        return response()->json(['proizvodiMuski' => $proizvodiMuski]);
+    }
+
+    public function dohvatiProizvodeZenski(){
+        $proizvodiZenski = Product::with('user', 'category', 'gender')
+                                ->whereHas('gender', function ($query) {
+                                    $query->where('name', 'Žene');
+                                })
+                                ->get();
+
+        return response()->json(['proizvodiZenski' => $proizvodiZenski]);
+    }
+
+    public function dohvatiProizvodeDjecji(){
+        $proizvodiDjeca = Product::with('user', 'category', 'gender')
+                                ->whereHas('gender', function ($query) {
+                                    $query->where('name', 'Djeca');
+                                })
+                                ->get();
+
+        return response()->json(['proizvodiDjeca' => $proizvodiDjeca]);
+    }
 }

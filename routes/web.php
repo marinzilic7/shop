@@ -26,6 +26,9 @@ Route::post('/addProduct',[ProductController::class,'dodajProizvod']);
 Route::get('/getProduct',[ProductController::class,'dohvatiProizvode']);
 Route::post('/deleteProduct/{id}',[ProductController::class,'izbrisiProizvod']);
 Route::post('/updateProduct/{id}',[ProductController::class,'urediArtikl']);
+Route::get('/getProductMan',[ProductController::class,'dohvatiProizvodeMuski']);
+Route::get('/getProductWoman',[ProductController::class,'dohvatiProizvodeZenski']);
+Route::get('/getProductKid',[ProductController::class,'dohvatiProizvodeDjecji']);
 
 Route::get('/{any}', function () {
     return view('welcome');

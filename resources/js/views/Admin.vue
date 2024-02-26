@@ -456,7 +456,7 @@ import Footer from "../components/Footer.vue";
                                                                 >
                                                                     <label
                                                                         for="message-text"
-                                                                        class="col-form-label text-light"
+                                                                        class="col-form-label "
                                                                         >Opis
                                                                         artikla:</label
                                                                     >

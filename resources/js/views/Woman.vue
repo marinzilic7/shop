@@ -45,16 +45,16 @@ export default {
         };
     },
     created() {
-        this.getProductMan();
+        this.getProductWoman();
     },
 
     methods: {
-        getProductMan() {
+        getProductWoman() {
             axios
-                .get("/getProductMan")
+                .get("/getProductWoman")
                 .then((response) => {
-                    this.products = response.data.proizvodiMuski;
-                    console.log("Ovo su muski proizvodi", this.products);
+                    this.products = response.data.proizvodiZenski;
+                    console.log("Ovo su zenski proizvodi", this.products);
                 })
                 .catch((error) => {
                     console.log(error);
